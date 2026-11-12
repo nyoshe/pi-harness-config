@@ -8,6 +8,7 @@ Personal [Pi](https://pi.dev) package: extensions and skills for the local-LLM c
 |---|---|
 | `extensions/nix.ts` | Tools `nix_eval`, `nix_build`, `nix_flake_check`, `nix_search` |
 | `skills/nix/SKILL.md` | Nix/NixOS/Home Manager workflow guidance |
+| `skills/screenshot/SKILL.md` | Capture the focused screen/window with niri and view it |
 
 ## Install
 
