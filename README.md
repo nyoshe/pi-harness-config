@@ -22,3 +22,19 @@ to `~/.pi/agent/settings.json`.
 
 Drop a TypeScript extension in `extensions/`, a skill directory (with `SKILL.md`) in `skills/`,
 or Markdown prompt templates in `prompts/`. Pi discovers them by convention.
+
+## Guards and helpers
+
+| Path | Provides |
+|---|---|
+| `extensions/permission-gate.ts` | Asks before dangerous bash (rm -rf, sudo, force push, `nixos-rebuild switch`, GC); blocks when headless |
+| `extensions/protected-paths.ts` | Blocks write/edit on secrets, `.git/`, `flake.lock`, `hardware-configuration.nix` (bash is not covered) |
+| `extensions/todo.ts` | `todo` tool and `/todos` command: a task list the model keeps |
+| `extensions/question.ts` | `question` tool: lets the model ask you instead of guessing |
+| `extensions/git-checkpoint.ts` | Git stash checkpoint each turn so `/fork` can restore code |
+
+`todo`, `question` and `git-checkpoint` are copied unchanged from Pi's bundled examples;
+`permission-gate` and `protected-paths` are adapted from them.
+
+Pi's built-in compaction already summarizes with the active model. The bundled
+`custom-compaction.ts` example is hard-wired to Gemini Flash, so it is not included.
