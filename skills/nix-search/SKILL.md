@@ -1,48 +1,70 @@
 ---
 name: nix-search
-description: Find the right Nix package or NixOS/Home Manager option. Use when you need a package attribute name, which package provides a command or file, a package's version/license/platforms, or whether an option exists. Never guess names.
+description: Find the right Nix package or NixOS/Home Manager option with `nh search`. Use when you need a package attribute name, which package provides a command, a package's version, or whether an option exists. Never guess names.
 ---
 
-# Finding Nix packages and options
+# Finding Nix packages and options with `nh search`
 
-A guessed attribute name that is wrong costs a failed build. Look it up, then confirm it evaluates.
+`nh search` queries search.nixos.org (packages, options, programs, nixpkgs PRs/issues). A guessed attribute name that is wrong costs a failed build, so look it up, then confirm it evaluates.
+
+Always pass `-j` and filter with `jq`: the default output is colored, has terminal hyperlinks and is long. Keep `-l` small (5-10). It needs network; the channel defaults to `nixos-unstable`, so use `-c <channel>` if this system pins another.
 
 ## Packages
 
-1. Search with the `nix_search` tool (or `nix search nixpkgs <terms> --json`).
-   - Terms are regexes and are ANDed. Anchor an exact name: `'^ripgrep$'`.
-   - Search by what it does ("pdf viewer"), not only by name.
-   - Results like `nixpkgs#foo` mean attribute `pkgs.foo`. Nested sets (`python3Packages.requests`, `kdePackages.dolphin`, `nodePackages.x`) must be written in full.
-2. Confirm and inspect the candidate with `nix_eval`:
-   - `nixpkgs#<attr>.meta.description`
-   - `nixpkgs#<attr>.version`
-   - `nixpkgs#<attr>.meta.license.spdxId`
-   - `nixpkgs#<attr>.meta.platforms` (is `x86_64-linux` in it?)
-   - `nixpkgs#<attr>.meta.broken` / `.meta.insecure` (must be false)
-   - `nixpkgs#<attr>.meta.mainProgram` (the command it installs)
-3. In a flake in this repo, prefer the repo's own pin over the registry: use `.#nixosConfigurations.<host>.pkgs.<attr>` so the version matches what the system builds.
+```bash
+nh search packages -j -l 8 "<terms>" 2>/dev/null \
+  | jq -r '.results[] | "\(.package_attr_set)/\(.package_attr_name)  \(.package_pversion)  main=\(.package_mainProgram // "-")  \(.package_description)"'
+```
 
-## Which package provides a command or file
+- Search by what it does ("pdf viewer"), not only by name.
+- `package_attr_set` is `No package set` for top-level packages (`pkgs.<attr>`). Otherwise write the full path, for example `python3Packages.requests` or `kdePackages.dolphin`.
+- Useful fields: `package_pversion`, `package_mainProgram`, `package_license_set`, `package_homepage`, `package_programs` (every binary it installs).
 
-- Try `nix_search` with the command name first; `mainProgram` often matches the attribute.
-- If `nix-locate` has an index (`ls ~/.cache/nix-index`), use `nix-locate --minimal --whole-name --at-root /bin/<cmd>`. If the index is missing, do not build it on your own (it downloads a lot); say so and fall back to the next option.
-- Otherwise search https://search.nixos.org/packages (use the web tools if available) with the `programs:` filter.
-- Do not guess that the command name equals the package name (`rg` is `ripgrep`, `convert` is `imagemagick`).
+## Which package provides a command
+
+Search for the command name and keep only results whose `package_programs` contain it:
+
+```bash
+nh search packages -j -l 15 "<command>" 2>/dev/null \
+  | jq -r '.results[] | select((.package_programs // []) | index("<command>")) | "\(.package_attr_name)  \(.package_pversion)"'
+```
+
+Do not assume the command equals the package name (`rg` is `ripgrep`, `dig` is `bind`/`dig`, `convert` is `imagemagick`). If several packages match, prefer the one whose name equals `package_mainProgram` or the plain upstream name, and say which alternatives exist.
 
 ## Options
 
-- NixOS option: `nix_eval` on `.#nixosConfigurations.<host>.options.<path>.description` (and `.type.description`, `.default`) returns the real definition for this system. List what exists under a prefix with `builtins.attrNames`.
-- Home Manager option: the same on `.#homeConfigurations."<user>@<host>".options.<path>`.
-- Repo-defined options (for example `bundles.*`): `grep -rn "mkOption\|mkEnableOption" <modules dir>` and read the module.
-- If an option path does not exist, you made it up. Search by a keyword instead (`grep -rn <keyword>` in nixpkgs/HM module sources, or search.nixos.org/options and home-manager-options docs via the web tools).
+```bash
+nh search options -j -l 5 "services.llama-cpp.enable" 2>/dev/null \
+  | jq -r '.results[] | "\(.option_name) :: \(.option_type)  default=\(.option_default)\n\(.option_description)"'
+```
 
-## Trying a package without installing it
+- Searches NixOS options. Home Manager options are included too; check the `option_flake` / `flake_name` fields to tell them apart.
+- For what this system actually defines (including repo options like `bundles.*`), `nix_eval` `.#nixosConfigurations.<host>.options.<path>.description`, or `grep -rn "mkOption\|mkEnableOption" <modules dir>`.
+- If the option path does not exist, you made it up: search by keyword instead.
 
-- `nix run nixpkgs#<attr> -- <args>` or `nix shell nixpkgs#<attr> -c <cmd>` runs it from the store without changing the system. This downloads the package; fine for a one-off check, but do not add it to the user's config unless asked.
+## Pull requests and issues
+
+`nh search prs "<terms>"` and `nh search issues "<terms>"` find nixpkgs PRs (with branch reachability) and issues. Use them when a package is missing, broken or outdated, to see whether a fix exists and has reached the channel. Keep `-l` small.
+
+## Confirm it works on this system
+
+After choosing a candidate, check it against this repo's own pin rather than the online channel, with `nix_eval`:
+
+- `.#nixosConfigurations.<host>.pkgs.<attr>.version`
+- `.#nixosConfigurations.<host>.pkgs.<attr>.meta.broken` and `.meta.insecure` (must be false)
+- `.#nixosConfigurations.<host>.pkgs.<attr>.meta.platforms` (contains `x86_64-linux`)
+
+The repo's nixpkgs may be older or newer than `nixos-unstable`, so a package found online may be missing locally or at another version. If so, say so.
+
+## Fallbacks
+
+- No network or `nh` fails: use the `nix_search` tool (`nix search nixpkgs '^name$' --json`, terms are regexes, ANDed).
+- Try without installing: `nix run nixpkgs#<attr> -- <args>` or `nix shell nixpkgs#<attr> -c <cmd>`. It downloads the package; fine for a one-off check, but do not add it to the user's config unless asked.
 
 ## Rules
 
-- Always report the exact attribute and version you found, and say if you could not verify it.
+- Report the exact attribute and version you found, and say if you could not verify it locally.
 - Prefer a package already in the repo's inputs over adding a new flake input.
 - Unfree packages need `allowUnfree`; say so instead of enabling it silently.
 - Adding the package to the user's config is a separate step: follow the `nix` skill (edit, `nix_eval`/`nix_build` dry run, ask the user to switch).
+- `nh` can also switch systems (`nh os switch`, `nh home switch`, `nh clean`). Never run those; only `nh search`.
