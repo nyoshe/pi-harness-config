@@ -45,6 +45,10 @@ niri msg action close-window --id "$id"   # close it when you are done
 
 Only close windows you opened yourself. Take the id from the list; never close a window you did not start.
 
+`close-window` is ignored by some apps (WezTerm, for one). Check the window list afterwards; if it is still there, stop the process you started (`kill <pid>`, using the `pid` from the window list or the command you spawned) rather than leaving it open. Never use `pkill` or kill by name, since that can take down the user's own windows.
+
+If `spawn` shows no window, do not launch the app again by another route. Look at the window list first, since the window may just be slow to appear, and wait up to about 10 seconds. If it still did not open, check that the command runs on its own (`command -v <cmd>`), fix it, and spawn once more. Never leave two copies running; close any extra one you opened before you continue.
+
 ## Rules
 
 - `--path` must be absolute. Use a unique name under `/tmp`; without `--path` the file lands in the user's Pictures folder.
