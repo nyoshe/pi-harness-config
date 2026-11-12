@@ -1,0 +1,16 @@
+{
+  "name": "pi-harness-config",
+  "version": "0.1.0",
+  "description": "Personal Pi harness config: tools and skills for local-model coding sessions",
+  "keywords": ["pi-package"],
+  "license": "MIT",
+  "pi": {
+    "extensions": ["./extensions"],
+    "skills": ["./skills"]
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-ai": "*",
+    "@earendil-works/pi-coding-agent": "*",
+    "typebox": "*"
+  }
+}
