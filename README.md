@@ -34,6 +34,7 @@ or Markdown prompt templates in `prompts/`. Pi discovers them by convention.
 | `extensions/todo.ts` | `todo` tool and `/todos` command: a task list the model keeps |
 | `extensions/question.ts` | `question` tool: lets the model ask you instead of guessing |
 | `extensions/git-checkpoint.ts` | Git stash checkpoint each turn so `/fork` can restore code |
+| `extensions/tokens-per-second.ts` | Live output tokens/s in the status bar while the model streams |
 
 `todo`, `question` and `git-checkpoint` are copied unchanged from Pi's bundled examples;
 `permission-gate` and `protected-paths` are adapted from them.
