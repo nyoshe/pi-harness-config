@@ -5,9 +5,13 @@
   "keywords": ["pi-package"],
   "license": "MIT",
   "pi": {
-    "extensions": ["./extensions"],
+    "extensions": ["./extensions", "./node_modules/pi-web-access/dist"],
     "skills": ["./skills"]
   },
+  "dependencies": {
+    "pi-web-access": "0.47.0"
+  },
+  "bundledDependencies": ["pi-web-access"],
   "peerDependencies": {
     "@earendil-works/pi-ai": "*",
     "@earendil-works/pi-coding-agent": "*",
