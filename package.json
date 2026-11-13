@@ -13,7 +13,7 @@
     "skills": ["./skills"]
   },
   "dependencies": {
-    "pi-open-tui": "0.4.5",
+    "pi-open-tui": "0.3.14",
     "pi-web-access": "0.47.0"
   },
   "bundledDependencies": ["pi-open-tui", "pi-web-access"],
