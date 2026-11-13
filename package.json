@@ -8,15 +8,17 @@
     "extensions": [
       "./extensions",
       "./node_modules/pi-web-access/dist",
-      "./node_modules/pi-open-tui/extensions/open-tui/index.ts"
+      "./node_modules/pi-open-tui/extensions/open-tui/index.ts",
+      "./node_modules/@juicesharp/rpiv-ask-user-question/index.ts"
     ],
     "skills": ["./skills"]
   },
   "dependencies": {
+    "@juicesharp/rpiv-ask-user-question": "2.15.0",
     "pi-open-tui": "0.3.14",
     "pi-web-access": "0.47.0"
   },
-  "bundledDependencies": ["pi-open-tui", "pi-web-access"],
+  "bundledDependencies": ["@juicesharp/rpiv-ask-user-question", "pi-open-tui", "pi-web-access"],
   "peerDependencies": {
     "@earendil-works/pi-ai": "*",
     "@earendil-works/pi-coding-agent": "*",

@@ -27,7 +27,7 @@
             inherit (builtins.fromJSON (builtins.readFile ./package.json)) version;
 
             src = ./.;
-            npmDepsHash = "sha256-TlKXxUbjGLHB6Q6nH+R3mpqtOTgDbkBIacKEhbMisvw=";
+            npmDepsHash = "sha256-no1pZq48tpmsoAolX7KO0pLPETbj8HW9ytCbnjEZ1/M=";
             npmInstallFlags = [ "--omit=peer" ];
             dontNpmBuild = true;
 

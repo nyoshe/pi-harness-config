@@ -11,8 +11,10 @@ Personal [Pi](https://pi.dev) package: extensions and skills for the local-LLM c
 | `skills/screenshot/SKILL.md` | Capture the focused screen/window with niri and view it |
 | `skills/nix-search/SKILL.md` | Look up packages, command providers and options with `nh search` |
 
-`pi-web-access` (web search and page fetch) and `pi-open-tui` (TUI polish) are pinned, bundled
-dependencies, so installing this package also provides them. Bump the version in `package.json` only after reviewing the release.
+`pi-web-access` (web search and page fetch), `pi-open-tui` (TUI polish) and
+`@juicesharp/rpiv-ask-user-question` (structured question dialog, replaces the old `question` tool)
+are pinned, bundled dependencies, so installing this package also provides them. Bump the version in
+`package.json` only after reviewing the release.
 `pi-open-tui` stays on 0.3.14: 0.4.x needs pi-tui >= 1.2 (0.4.3+ needs >= 1.5) and crashes the settings menu on Pi 1.1.0.
 
 ## Install
@@ -36,12 +38,11 @@ or Markdown prompt templates in `prompts/`. Pi discovers them by convention.
 | `extensions/permission-gate.ts` | Asks before dangerous bash (rm -rf, sudo, force push, `nixos-rebuild switch`, GC); blocks when headless |
 | `extensions/protected-paths.ts` | Blocks write/edit on secrets, `.git/`, `flake.lock`, `hardware-configuration.nix` (bash is not covered) |
 | `extensions/todo.ts` | `todo` tool and `/todos` command: a task list the model keeps |
-| `extensions/question.ts` | `question` tool: lets the model ask you instead of guessing |
+| `@juicesharp/rpiv-ask-user-question` (bundled) | `ask_user_question` tool: a tabbed question dialog the model opens instead of guessing |
 | `extensions/git-checkpoint.ts` | Git stash checkpoint each turn so `/fork` can restore code |
 | `extensions/append-system.ts` | Appends `system/append.md` (working style, NixOS environment notes) to the system prompt |
-| `extensions/tokens-per-second.ts` | Live output tokens/s in the status bar while the model streams |
 
-`todo`, `question` and `git-checkpoint` are copied unchanged from Pi's bundled examples;
+`todo` and `git-checkpoint` are copied unchanged from Pi's bundled examples;
 `permission-gate` and `protected-paths` are adapted from them.
 
 Pi's built-in compaction already summarizes with the active model. The bundled
