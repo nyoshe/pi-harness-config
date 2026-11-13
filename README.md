@@ -11,8 +11,8 @@ Personal [Pi](https://pi.dev) package: extensions and skills for the local-LLM c
 | `skills/screenshot/SKILL.md` | Capture the focused screen/window with niri and view it |
 | `skills/nix-search/SKILL.md` | Look up packages, command providers and options with `nh search` |
 
-`pi-web-access` (web search and page fetch) is a pinned, bundled dependency, so installing this
-package also provides it. Bump the version in `package.json` only after reviewing the release.
+`pi-web-access` (web search and page fetch) and `pi-open-tui` (TUI polish) are pinned, bundled
+dependencies, so installing this package also provides them. Bump the version in `package.json` only after reviewing the release.
 
 ## Install
 
