@@ -1,0 +1,7 @@
+{
+  "instruction": "Run summarize.py on sales.csv and save its exact output to result.txt.",
+  "timeout": 900,
+  "prewarm": ["python3"],
+  "verify_packages": ["python3"],
+  "tags": ["nixos", "missing-tool"]
+}

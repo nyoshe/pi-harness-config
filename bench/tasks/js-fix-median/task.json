@@ -1,0 +1,6 @@
+{
+  "instruction": "`median` in stats.js returns wrong results for some inputs. Fix it. `node test.js` runs the existing tests.",
+  "timeout": 900,
+  "packages": ["nodejs"],
+  "tags": ["bugfix", "javascript"]
+}
