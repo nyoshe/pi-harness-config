@@ -11,8 +11,7 @@ Personal [Pi](https://pi.dev) package: extensions and skills for the local-LLM c
 | `skills/nix-search/SKILL.md` | Look up packages, command providers and options with `nh search` |
 
 `pi-web-access` (web search and page fetch), `pi-open-tui` (TUI polish),
-`@juicesharp/rpiv-ask-user-question` (structured question dialog, replaces the old `question` tool),
-`billion-context` (context compression for long sessions) and
+`@juicesharp/rpiv-ask-user-question` (structured question dialog, replaces the old `question` tool) and
 `@onkernel/browser-loop` (browser tools backed by Kernel browsers)
 are pinned, bundled dependencies, so installing this package also provides them. Bump the version in
 `package.json` only after reviewing the release.
