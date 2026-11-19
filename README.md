@@ -12,7 +12,7 @@ Personal [Pi](https://pi.dev) package: extensions and skills for the local-LLM c
 
 `pi-web-access` (web search and page fetch), `pi-open-tui` (TUI polish),
 `@juicesharp/rpiv-ask-user-question` (structured question dialog, replaces the old `question` tool),
-`pi-llama-swap` (live model discovery from a llama-swap router, set with `LLAMA_SWAP_URL`) and
+`@danielmeneses/pi-llama-swap` (llama-swap provider with live model discovery, configured in `~/.pi/agent/pi-llama-swap.json`) and
 `@onkernel/browser-loop` (browser tools backed by Kernel browsers)
 are pinned, bundled dependencies, so installing this package also provides them. Bump the version in
 `package.json` only after reviewing the release.

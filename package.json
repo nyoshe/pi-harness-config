@@ -13,23 +13,23 @@
       "./node_modules/pi-open-tui/extensions/open-tui/index.ts",
       "./node_modules/@juicesharp/rpiv-ask-user-question/index.ts",
       "./node_modules/@onkernel/browser-loop/src/pi-extension/index.ts",
-      "./node_modules/pi-llama-swap/extensions"
+      "./node_modules/@danielmeneses/pi-llama-swap/index.ts"
     ],
     "skills": [
       "./skills"
     ]
   },
   "dependencies": {
+    "@danielmeneses/pi-llama-swap": "0.1.3",
     "@juicesharp/rpiv-ask-user-question": "2.15.0",
     "@onkernel/browser-loop": "0.12.1",
-    "pi-llama-swap": "0.1.0",
     "pi-open-tui": "0.3.14",
     "pi-web-access": "0.47.0"
   },
   "bundledDependencies": [
+    "@danielmeneses/pi-llama-swap",
     "@juicesharp/rpiv-ask-user-question",
     "@onkernel/browser-loop",
-    "pi-llama-swap",
     "pi-open-tui",
     "pi-web-access"
   ],
