@@ -13,6 +13,7 @@ Personal [Pi](https://pi.dev) package: extensions and skills for the local-LLM c
 
 `pi-web-access` (web search and page fetch), `pi-open-tui` (TUI polish) and
 `@juicesharp/rpiv-ask-user-question` (structured question dialog, replaces the old `question` tool)
+and `billion-context` (context compression for long sessions)
 are pinned, bundled dependencies, so installing this package also provides them. Bump the version in
 `package.json` only after reviewing the release.
 `pi-open-tui` stays on 0.3.14: 0.4.x needs pi-tui >= 1.2 (0.4.3+ needs >= 1.5) and crashes the settings menu on Pi 1.1.0.
