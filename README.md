@@ -11,9 +11,10 @@ Personal [Pi](https://pi.dev) package: extensions and skills for the local-LLM c
 | `skills/screenshot/SKILL.md` | Capture the focused screen/window with niri and view it |
 | `skills/nix-search/SKILL.md` | Look up packages, command providers and options with `nh search` |
 
-`pi-web-access` (web search and page fetch), `pi-open-tui` (TUI polish) and
-`@juicesharp/rpiv-ask-user-question` (structured question dialog, replaces the old `question` tool)
-and `billion-context` (context compression for long sessions)
+`pi-web-access` (web search and page fetch), `pi-open-tui` (TUI polish),
+`@juicesharp/rpiv-ask-user-question` (structured question dialog, replaces the old `question` tool),
+`billion-context` (context compression for long sessions) and
+`@onkernel/browser-loop` (browser tools backed by Kernel browsers)
 are pinned, bundled dependencies, so installing this package also provides them. Bump the version in
 `package.json` only after reviewing the release.
 `pi-open-tui` stays on 0.3.14: 0.4.x needs pi-tui >= 1.2 (0.4.3+ needs >= 1.5) and crashes the settings menu on Pi 1.1.0.

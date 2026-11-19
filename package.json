@@ -10,17 +10,19 @@
       "./node_modules/pi-web-access/dist",
       "./node_modules/pi-open-tui/extensions/open-tui/index.ts",
       "./node_modules/@juicesharp/rpiv-ask-user-question/index.ts",
-      "./node_modules/billion-context/dist/agent/billion-context.js"
+      "./node_modules/billion-context/dist/agent/billion-context.js",
+      "./node_modules/@onkernel/browser-loop/src/pi-extension/index.ts"
     ],
     "skills": ["./skills"]
   },
   "dependencies": {
     "@juicesharp/rpiv-ask-user-question": "2.15.0",
+    "@onkernel/browser-loop": "0.12.1",
     "billion-context": "0.1.216",
     "pi-open-tui": "0.3.14",
     "pi-web-access": "0.47.0"
   },
-  "bundledDependencies": ["@juicesharp/rpiv-ask-user-question", "billion-context", "pi-open-tui", "pi-web-access"],
+  "bundledDependencies": ["@juicesharp/rpiv-ask-user-question", "@onkernel/browser-loop", "billion-context", "pi-open-tui", "pi-web-access"],
   "peerDependencies": {
     "@earendil-works/pi-ai": "*",
     "@earendil-works/pi-coding-agent": "*",
